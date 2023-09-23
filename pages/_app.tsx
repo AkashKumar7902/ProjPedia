@@ -1,6 +1,17 @@
-import '@/styles/globals.css'
-import type { AppProps } from 'next/app'
+import { RecoilRoot, useRecoilSnapshot } from "recoil";
+import { useEffect } from "react";
+import { SnackbarProvider } from "notistack";
+import { AppProps } from "next/app";
+import "../styles/globals.css";
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+function MyApp({ Component, pageProps }: AppProps) {
+  return (
+    <RecoilRoot>
+      <SnackbarProvider maxSnack={3} autoHideDuration={3000}>
+        <Component {...pageProps} />
+      </SnackbarProvider>
+    </RecoilRoot>
+  );
 }
+
+export default MyApp;
