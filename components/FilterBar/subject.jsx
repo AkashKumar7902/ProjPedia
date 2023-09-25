@@ -3,8 +3,8 @@ import {useState, useEffect} from 'react';
 
 import { useRecoilState } from 'recoil';
 import { subjectSelectedState } from '../../atoms/index';
-import connectMongoDb from '../../libs/mongodb';
-import { Project } from '../../models/project';
+// import connectMongoDb from '../../libs/mongodb';
+// import { Project } from '../../models/project';
 
 const Subject = () => {
     const [subjects, setSubjects] = useState('');
@@ -26,9 +26,9 @@ const Subject = () => {
     // }, [])
     return (
         <div className="max-h-36 overflow-y-scroll absolute left-1/4 w-1/4 top-11 py-3 flex flex-col gap-2 bg-gray-100 z-50 rounded-b-lg outline outline-1 outline-gray-200">
-            {subjects && subjects.map((subject, index) => {
+            {subjects && subjects.map((subject) => {
                 return (
-                    <label className="pl-2 flex gap-2">
+                    <label className="pl-2 flex gap-2" key={subject}>
                         <input type="radio" value={subject} checked={subjectSelected === subject} onChange={handleChange} />
                         {subject}
                     </label>

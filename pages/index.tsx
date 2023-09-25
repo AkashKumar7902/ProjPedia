@@ -1,11 +1,20 @@
-import type { NextPage } from 'next';
+import * as React from 'react';
+import {useEffect} from 'react';
 import Head from 'next/head';
+import { useRecoilState } from 'recoil';
+import axios from 'axios';
+import useSWR from 'swr';
 
 import SearchBar from '../components/SearchBar';
 import FilterBar from '../components/FilterBar';
 import ProjectComp from '../components/projectElement'
+import { allProjectDataState } from '@/atoms';
+
+const fetcher = url => axios.get(url).then(res => res.data);
 
 const Home = () => {
+  const {data, isLoading, error} = useSWR('/api/show', fetcher);
+  console.log(data);
   return (
     <>
       <Head>
@@ -15,8 +24,10 @@ const Home = () => {
       </Head>
       <SearchBar/>
       <FilterBar/>
-      <div className="flex flex-row bg-gray-200 relative outline outline-1 outline-gray-400 rounded-md md:mx-24 mx-3 md:mt-7 mt-4">
-         <ProjectComp />
+      <div className="flex flex-col bg-gray-200 relative outline outline-1 outline-gray-400 rounded-md md:mx-24 mx-3 md:mt-7 mt-4">
+         {data && data.map((project) => (
+            <ProjectComp key={project.name} projectDetails={project}/>
+         ))}
       </div>
     </>
   );

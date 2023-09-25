@@ -12,9 +12,9 @@ export default function Navbar() {
                     <div className="flex justify-center items-center">ProjPedia</div>     
                 </div>
             </Link>
-            <div className="flex justify-center items-center">
+            <Link href="/login" className="flex justify-center items-center">
                 <button className="outline-1 rounded-md p-1 mt-2 outline-black outline bg-slate-200 w-20">Login</button>
-            </div>
+            </Link>
         </div>
     );
 }

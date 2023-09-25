@@ -1,10 +1,5 @@
 import { atom, selector, useRecoilState, useRecoilValue } from "recoil";
 
-export const projectsDataState = atom({
-  key: "projectsDataState",
-  default: [],
-});
-
 export const searchResultsState = atom({
     key: "searchResultsState",
     default: "",
@@ -53,6 +48,11 @@ export const yearSelectedState = atom({
 export const sortTypeState = atom({
     key: "sortTypeState",
     default: "latest"
+})
+
+export const allProjectDataState = atom({
+    key: "allProjectDataState",
+    default: []
 })
 
 export const reqBodyState = atom({

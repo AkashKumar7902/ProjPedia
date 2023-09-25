@@ -1,14 +1,18 @@
-const mongooose = require('mongoose');
-const Schema = mongooose.Schema;
+const mongoose = require("mongoose");
 
-const UniversitySchema = new Schema({
+const universitySchema = new mongoose.Schema({
     name: String,
-    email: String,
-    password: String,
-    projects: [{ type: Schema.Types.ObjectId, ref: 'Project' }],
+    email: {
+        type: String,
+        required: [true, 'Email is required'],
+        unique: true,
+    },
+    password: {
+        type: String,
+        required: [true, 'Password is required'],
+    },
+    projects: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Project' }],
 });
 
-
-const University = mongooose.models?.University || mongooose.model('University', UniversitySchema);
-
-module.exports = { University };
+const University = mongoose.models.University || mongoose.model('University', universitySchema);
+export default University;

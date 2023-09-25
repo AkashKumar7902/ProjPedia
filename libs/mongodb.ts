@@ -1,45 +1,24 @@
 import mongoose from "mongoose";
+require('dotenv').config();
 
-import 'dotenv/config'
 
-declare global {
-  var mongoose: any // This must be a `var` and not a `let / const`
-}
-console.log(mongoose)
-const MONGODB_URI = process.env.MONGODB_URI! 
+export async function connect() {
+    try {
+        mongoose.connect(process.env.MONGO_URI!);
+        const connection = mongoose.connection;
 
-if (!MONGODB_URI) {
-  throw new Error(
-    'Please define the MONGODB_URI environment variable inside .env.local'
-  )
-}
+        connection.on('connected', () => {
+            console.log('MongoDB connected successfully');
+        })
 
-let cached = global.mongoose
+        connection.on('error', (err) => {
+            console.log('MongoDB connection error. Please make sure MongoDB is running. ' + err);
+            process.exit();
+        })
 
-if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null }
-}
-
-async function connectMongoDb() {
-  if (cached.conn) {
-    return cached.conn
-  }
-  if (!cached.promise) {
-    const opts = {
-      bufferCommands: false,
+    } catch (error) {
+        console.log('Something goes wrong!');
+        console.log(error.message);
+        
     }
-    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
-      return mongoose
-    })
-  }
-  try {
-    cached.conn = await cached.promise
-  } catch (e) {
-    cached.promise = null
-    throw e
-  }
-
-  return cached.conn
 }
-
-export default connectMongoDb

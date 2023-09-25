@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const ProjectSchema = new Schema({
@@ -20,6 +20,6 @@ const ProjectSchema = new Schema({
 },
 { timestamps: { createdAt: 'created_at' } });
 
-const Project = mongoose.models?.Project || mongoose.model('Project', ProjectSchema);
+const Project = mongoose.models.Project || mongoose.model('Project', ProjectSchema);
 
 module.exports = { Project };
